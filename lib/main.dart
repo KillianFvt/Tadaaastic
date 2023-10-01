@@ -66,19 +66,26 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
 
-            SliverGrid(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 800.0,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 1,
-                ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical:0.0, horizontal:10.0),
+              sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 100.0,
+                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 5.0,
+                    childAspectRatio: 1,
+                  ),
 
-                delegate: SliverChildListDelegate(
-                  [
-                    const FolderShortcut()
-                  ]
-                )
+                  delegate: SliverChildListDelegate(
+                    [
+                      const FolderShortcut(color: Color(0xFF5B20A5)),
+                      const FolderShortcut(color: Color(0xFFB56B15)),
+                      const FolderShortcut(color: Color(0xFF208DA5)),
+                      const FolderShortcut(color: Color(0xFF53A520)),
+                      const FolderShortcut(color: Color(0xFFA52020)),
+                    ]
+                  )
+              ),
             ),
 
             SliverGrid(
