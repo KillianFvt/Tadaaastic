@@ -35,4 +35,13 @@ class _FractionalBorderRadiusContainerState extends State<FractionalBorderRadius
       child: widget.child,
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => print(widget.borderRadiusFactor *
+              (widget.width ?? 1 * MediaQuery.of(context).size.width),)
+    );
+  }
 }

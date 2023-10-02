@@ -20,62 +20,112 @@ class FolderShortcut extends StatefulWidget {
 }
 
 class _FolderShortcutState extends State<FolderShortcut> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  static double _scaleTransformValue = 1;
+  static const _durationMilliseconds = 100;
+
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: _durationMilliseconds),
+    vsync: this,
+
+  )..addListener(() {
+    setState(() => _scaleTransformValue = _animation.value);
+  });
+
+
+  late final Animation<double> _animationCurve = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+
+  late final Animation<double> _animation = Tween(begin: 1.0, end: 0.9).animate(_animationCurve);
+
+  void shrink() {
+    _controller.forward();
+  }
+
+  void restore() {
+    Future.delayed(
+      const Duration(milliseconds: _durationMilliseconds),
+          () => _controller.reverse(),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    // _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {},  //TODO make the function
+      onTap: () {
+        shrink();
+        restore();
+      },
 
-      child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Stack(
-            children: [
+      child: Transform.scale(
+        scale: _scaleTransformValue,
 
-              FractionalTranslation(
-                translation: const Offset(0.15,0.3),
-                child: FractionallySizedBox(
-                    alignment: Alignment.center,
-                    widthFactor: 0.8, heightFactor: 0.5,
+        child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Stack(
+              children: [
 
-                    child: FractionalBorderRadiusContainer(
-                      borderRadiusFactor: 0.2,
-                      color: widget.color,
+                FractionalTranslation(
+                  translation: const Offset(0.15,0.3),
+                  child: FractionallySizedBox(
+                      alignment: Alignment.center,
+                      widthFactor: 0.8, heightFactor: 0.5,
+
+                      child: FractionalBorderRadiusContainer(
+                        borderRadiusFactor: 0.04,
+                        color: widget.color,
+                      )
+                  ),
+                ),
+
+                Center(
+                  child: SvgPicture.asset(
+                    "assets/svg/folder.svg",
+                    theme: const SvgTheme(
+                      currentColor: Color(0xFF171717)
+                    ),
+                    colorFilter: const ColorFilter.mode(Color(0xFF171717), BlendMode.srcIn),
+                    fit: BoxFit.contain,
+                    height: double.infinity,
+                    width: double.infinity,
+                  ),
+                ),
+
+                PositionedDirectional(
+                    bottom: 15,
+                    start: 10,
+                    child: Text(
+                      widget.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                      ),
                     )
                 ),
-              ),
 
-              Center(
-                child: SvgPicture.asset(
-                  "assets/svg/folder.svg",
-                  theme: const SvgTheme(
-                    currentColor: Color(0xFF171717)
-                  ),
-                  colorFilter: const ColorFilter.mode(Color(0xFF171717), BlendMode.srcIn),
-                  fit: BoxFit.contain,
-                  height: double.infinity,
-                  width: double.infinity,
-                ),
-              ),
-
-              // TODO add the name
-
-              // TODO add the note count
-            ],
-          ),
-
+                PositionedDirectional(
+                    top: 14,
+                    start: 10,
+                    child: Text(
+                      "${widget.noteAmt}",
+                      style: const TextStyle(
+                        color: Color(0xFF949494),
+                        fontSize: 10,
+                      ),
+                    )
+                )
+              ],
+            ),
+        ),
       ),
     );
   }

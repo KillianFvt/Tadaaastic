@@ -3,7 +3,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tadaaastic/widgets/folder_shortcut.dart';
 
-import 'hive_adapters/color_adapter.dart';
+import '../hive_adapters/color_adapter.dart';
 
 
 void main() async {
@@ -31,28 +31,48 @@ class MyApp extends StatelessWidget {
           displayColor: Colors.white,
         ),
       ),
-      home: const MyHomePage(title: 'Tadaastic'),
+      home: const GeneralOverview(title: 'Tadaastic'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class GeneralOverview extends StatefulWidget {
+  const GeneralOverview({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<GeneralOverview> createState() => _GeneralOverviewState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _GeneralOverviewState extends State<GeneralOverview> {
 
+  List<Widget> folders = [
+    const FolderShortcut(color: Color(0xFF5B20A5)),
+    const FolderShortcut(color: Color(0xFFB56B15)),
+    const FolderShortcut(color: Color(0xFF208DA5)),
+    const FolderShortcut(color: Color(0xFF53A520)),
+    const FolderShortcut(color: Color(0xFFA52020)),
+  ];
+
+  void newNote() {
+    // TODO implement new note function
+  }
 
   @override
   Widget build(BuildContext context) {
 
 
     return Scaffold(
+
+      floatingActionButton: FloatingActionButton(
+          onPressed: newNote,
+          tooltip: 'Nouvelle note',
+          child: const Icon(Icons.add)
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
@@ -64,11 +84,17 @@ class _MyHomePageState extends State<MyHomePage> {
               flexibleSpace: FlexibleSpaceBar(
                 title: Text('Demo'),
               ),
+
             ),
 
+            // maxCrossAxisExtent: 100.0,
+            // mainAxisSpacing: 0,
+            // crossAxisSpacing: 5.0,
+            // childAspectRatio: 1,
+
             SliverPadding(
-              padding: const EdgeInsets.symmetric(vertical:0.0, horizontal:10.0),
-              sliver: SliverGrid(
+                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 100.0,
                     mainAxisSpacing: 0,
@@ -77,15 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
 
                   delegate: SliverChildListDelegate(
-                    [
-                      const FolderShortcut(color: Color(0xFF5B20A5)),
-                      const FolderShortcut(color: Color(0xFFB56B15)),
-                      const FolderShortcut(color: Color(0xFF208DA5)),
-                      const FolderShortcut(color: Color(0xFF53A520)),
-                      const FolderShortcut(color: Color(0xFFA52020)),
-                    ]
-                  )
-              ),
+                    folders
+                  ),
+                ),
             ),
 
             SliverGrid(
