@@ -66,6 +66,18 @@ class _FolderShortcutState extends State<FolderShortcut> with SingleTickerProvid
         restore();
       },
 
+      onTapDown: (tdd) {
+        shrink();
+      },
+
+      onTapCancel: () {
+        restore();
+      },
+
+      onLongPress: () {
+
+      },
+
       child: Transform.scale(
         scale: _scaleTransformValue,
 

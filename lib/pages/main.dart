@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tadaaastic/pages/note_page.dart';
 import 'package:tadaaastic/widgets/folder_shortcut.dart';
 
 import '../hive_adapters/color_adapter.dart';
@@ -56,7 +57,14 @@ class _GeneralOverviewState extends State<GeneralOverview> {
   ];
 
   void newNote() {
-    // TODO implement new note function
+    Navigator.push(context, MaterialPageRoute(
+        builder:
+            (context) => const NotePage(
+              name: "Test",
+              noteId: 0,
+              parentId: 1,
+            )
+    ));
   }
 
   @override
@@ -86,12 +94,7 @@ class _GeneralOverviewState extends State<GeneralOverview> {
               ),
 
             ),
-
-            // maxCrossAxisExtent: 100.0,
-            // mainAxisSpacing: 0,
-            // crossAxisSpacing: 5.0,
-            // childAspectRatio: 1,
-
+            
             SliverPadding(
                 padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 sliver: SliverGrid(
