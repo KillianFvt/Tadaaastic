@@ -92,7 +92,6 @@ class _GeneralOverviewState extends State<GeneralOverview> {
               flexibleSpace: FlexibleSpaceBar(
                 title: Text('Demo'),
               ),
-
             ),
             
             SliverPadding(
