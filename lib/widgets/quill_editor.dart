@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:tadaaastic/widgets/quill_embed_blocks/embed_test.dart';
+
 
 
 class QuillWidget extends StatefulWidget {
@@ -34,6 +36,10 @@ class _QuillWidgetState extends State<QuillWidget> {
           autoFocus: false,
           expands: false,
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+
+          embedBuilders: <EmbedBuilder>[
+            RedBoxEmbedBuilder(),
+          ],
         ),
       ),
     );

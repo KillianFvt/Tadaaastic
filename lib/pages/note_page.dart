@@ -3,6 +3,7 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:tadaaastic/widgets/floating_quill_toolbox.dart';
 import 'package:tadaaastic/widgets/quill_editor.dart' show QuillWidget;
 import 'package:tadaaastic/widgets/fqt_toggler.dart';
+import 'package:tadaaastic/widgets/quill_embed_blocks/embed_test.dart';
 
 
 class NotePage extends StatefulWidget {
@@ -121,15 +122,45 @@ class _NotePageState extends State<NotePage> with WidgetsBindingObserver {
                             _focusNode.unfocus();
                           },
                         ),
+
+                        IconButton(
+                          icon: const Icon(Icons.add, color: Colors.white),
+                          color: Colors.white,
+                          tooltip: 'yes',
+                          onPressed: () {
+
+                            // insert a redbox embed into the editor
+                            final block = quill.BlockEmbed.custom(
+                              RedBoxEmbed(
+                                RedBoxEmbed.redBoxType,
+                                'This is a red box embed gregrgrdgrdgrdgdrgrdgrdgrdgrdgrdgrdgrd',
+                                // Todo REMEMBER HOW TO USE THIS ISHT
+                              ),
+                            );
+
+                            final controller = _controller;
+                            final index = controller.selection.baseOffset;
+                            final length = controller.selection.extentOffset - index;
+
+                            controller.replaceText(index, length, block, null);
+
+                          },
+                        ),
                       ],
                     ),
 
                     SliverToBoxAdapter(
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        child: QuillWidget(
-                          focusNode: _focusNode,
-                          controller: _controller,
+                        color: Colors.black,
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+
+
+                          child: QuillWidget(
+                            focusNode: _focusNode,
+                            controller: _controller,
+                          ),
                         ),
                       ),
                     )

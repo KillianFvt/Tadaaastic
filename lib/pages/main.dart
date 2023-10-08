@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tadaaastic/pages/note_page.dart';
 import 'package:tadaaastic/widgets/folder_shortcut.dart';
-
 import '../hive_adapters/color_adapter.dart';
 
 
@@ -21,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
