@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
@@ -26,6 +25,8 @@ class FloatingQuillToolboxState extends State<FloatingQuillToolbox> with SingleT
 
   static double _toolboxBottomShift = 80;
 
+  double get toolboxBottomShift => _toolboxBottomShift;
+
   static const _durationMilliseconds = 250;
 
   late final AnimationController _controller = AnimationController(
@@ -49,16 +50,31 @@ class FloatingQuillToolboxState extends State<FloatingQuillToolbox> with SingleT
     _controller.reverse();
   }
 
-  void toggleMenu() {
-    if (_controller.isCompleted) {
-      closeMenu();
+  void toggleMenu([bool? force]) {
+    if (force != null) {
+      if (force) {
+        openMenu();
+      } else {
+        closeMenu();
+      }
     } else {
-      openMenu();
+      if (_controller.isCompleted) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     }
   }
 
   @override
+  void initState() {
+    super.initState();
+    closeMenu();
+  }
+
+  @override
   void dispose() {
+    closeMenu();
     _controller.dispose();
     super.dispose();
   }
@@ -72,7 +88,7 @@ class FloatingQuillToolboxState extends State<FloatingQuillToolbox> with SingleT
         child: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            
+
             child: DecoratedBox(
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.25),

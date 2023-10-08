@@ -68,6 +68,12 @@ class _GeneralOverviewState extends State<GeneralOverview> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
 
