@@ -39,7 +39,6 @@ dependencies:
   hive_flutter: ^1.1.0
   flutter_svg: ^2.0.7
   flutter_quill: ^7.4.9
-  extended_text_field: ^12.1.0
 
 dev_dependencies:
   flutter_test:
