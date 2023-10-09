@@ -114,6 +114,7 @@ class FloatingQuillToolboxState extends State<FloatingQuillToolbox> with SingleT
                     showQuote: false,
                     showLink: false,
                     showCodeBlock: false,
+                    showFontSize: true,
                     iconTheme: const QuillIconTheme(
                       iconUnselectedColor: Colors.white,
                       iconSelectedColor: Colors.white,

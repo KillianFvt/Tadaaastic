@@ -4,6 +4,7 @@ import 'package:tadaaastic/widgets/floating_quill_toolbox.dart';
 import 'package:tadaaastic/widgets/quill_editor.dart' show QuillWidget;
 import 'package:tadaaastic/widgets/fqt_toggler.dart';
 import 'package:tadaaastic/widgets/quill_embed_blocks/embed_test.dart';
+import 'package:tadaaastic/functions/search_line_start.dart' show searchLineStart;
 
 
 class NotePage extends StatefulWidget {
@@ -133,16 +134,22 @@ class _NotePageState extends State<NotePage> with WidgetsBindingObserver {
                             final block = quill.BlockEmbed.custom(
                               RedBoxEmbed(
                                 RedBoxEmbed.redBoxType,
-                                'This is a red box embed gregrgrdgrdgrdgdrgrdgrdgrdgrdgrdgrdgrd',
+                                'X',
                                 // Todo REMEMBER HOW TO USE THIS ISHT
                               ),
                             );
 
                             final controller = _controller;
                             final index = controller.selection.baseOffset;
+                            final lineStart = searchLineStart(controller, index);
                             final length = controller.selection.extentOffset - index;
 
-                            controller.replaceText(index, length, block, null);
+                            controller.replaceText(lineStart, length, block, null);
+                            if (index == lineStart) {
+                              controller.moveCursorToPosition(index+1);
+                            }
+
+                            print(controller.document.toPlainText());
 
                           },
                         ),
